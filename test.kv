@@ -1,0 +1,81 @@
+<Gerenciador>:
+    Menu:
+        name: 'menu'
+    Tarefas:
+        name: 'tarefas'
+
+    # Screen:
+    #     Button: 
+    #         text: 'Ver tarefas'
+    #         on_release: root.current = 'tarefas' # current é uma referência a tela atual do aplicativo
+
+<Menu>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 200
+        spacing: 50
+        Image:
+            source: 'img/logo.png'
+            size_hint_y: None
+            height: 200
+            allow_stretch: True
+        Button:
+            text: 'Tarefas'
+            on_release: app.root.current = 'tarefas'
+        Button:
+            text: 'Assistente'
+        Button:
+            text: 'Sair'
+            on_release: app.stop()
+
+<Tarefas>:
+    BoxLayout:
+        orientation: 'vertical'
+        ActionBar:
+            ActionView: 
+                ActionPrevious:
+                    title: 'Tarefas'
+                    on_release: app.root.current = 'menu' # mudar para a tela menu
+
+                ActionButton:
+                    text: 'Sair'
+                    on_release: app.stop()
+        ScrollView: 
+            BoxLayout:
+                id: box
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height # pega o tamanho mínimo para se adaptar ao box layout
+        BoxLayout:
+            size_hint_y: None
+            height: 60
+            TextInput:
+                id: texto
+            Buttton: 
+                text: '+'
+                size_hint_x: None
+                width: 60
+                on_release: root.addWidget()
+
+<Tarefa>
+    size_hint_y:None
+    height: 200
+    Label:
+        id: label
+        font_size: 30
+    Button:
+        text: 'X'
+        size_hint_x: None
+        width: 60
+        on_release: app.root.get_screen('tarefas').ids.box.remove_widget(root) # root é uma referência ao primeiro widget, ao widget principal desse contexto
+
+# <incrementador>:
+#     orientation: 'vertical'
+#     Button:
+#         text: 'Incrementar'
+#         font_size: 30
+#         on_release: label .text = str(int(label.text) + 1)
+#     Label:
+#         id: label
+#         text: '1'
+#         font_size: 30
